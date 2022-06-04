@@ -19,3 +19,18 @@ function play(playerSelection, computerSelection) {
     }
 }
 
+function game() {
+    let playerScore = 0, computerScore = 0
+    for (let i = 0; i < 5; i++) {
+        let result = play(prompt('Make a selection'), computerPlay())
+        if (result === 'player') playerScore++
+        else if (result === 'computer') computerScore++
+        else if (result === 'tie') i--
+    }
+    let winnerMessage = playerScore > computerScore ? `You win!` : `The Computer Wins!`
+    console.log(`Final Score:
+    You : ${playerScore} Computer : ${computerScore}
+    ${winnerMessage}`)
+}
+
+game()
