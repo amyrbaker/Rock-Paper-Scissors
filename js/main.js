@@ -4,13 +4,13 @@ function computerPlay() {
     return computerSelection
 }
 
-function playRound(e, computerSelection) {
-    const playerSelection = e.srcElement.id
-    if ((playerSelection === 'rock' && computerSelection === 'Scissors') || (playerSelection === 'paper' && computerSelection === 'Rock') || (playerSelection === 'scissors' && computerSelection === 'Paper')) {
-        console.log(`You Win! ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()} beats ${computerSelection}`)
+function playRound(playerSelection, computerSelection) {
+    console.log(playerSelection, computerSelection)
+    if ((playerSelection === 'rock' && computerSelection === 'scissors') || (playerSelection === 'paper' && computerSelection === 'rock') || (playerSelection === 'scissors' && computerSelection === 'paper')) {
+        console.log(`You Win! ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()} beats ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()}`)
         return 'player'
-    } else if ((playerSelection === 'rock' && computerSelection === 'Paper') || (playerSelection === 'paper' && computerSelection === 'Scissors') || (playerSelection === 'scissors' && computerSelection === 'Rock')){
-        console.log(`You Lose! ${computerSelection} beats ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()}`)
+    } else if ((playerSelection === 'rock' && computerSelection === 'paper') || (playerSelection === 'paper' && computerSelection === 'scissors') || (playerSelection === 'scissors' && computerSelection === 'rock')){
+        console.log(`You Lose! ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()} beats ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()}`)
         return 'computer'
     } else if (playerSelection === computerSelection) {
         console.log(`You tie! You both threw ${computerSelection}`)
@@ -20,21 +20,22 @@ function playRound(e, computerSelection) {
     }
 }
 
-// function game() {
-//     let playerScore = 0, computerScore = 0
-//     for (let i = 0; i < 5; i++) {
-//         let result = playRound(prompt('Make a selection'), computerPlay())
-//         if (result === 'player') playerScore++
-//         else if (result === 'computer') computerScore++
-//         else if (result === 'tie') i--
-//     }
-//     let winnerMessage = playerScore > computerScore ? `You win!` : `The Computer Wins!`
-//     console.log(`Final Score:
-//     You : ${playerScore} Computer : ${computerScore}
-//     ${winnerMessage}`)
-// }
+let playerScore = 0, computerScore = 0
+function game(e) {
+    const playerSelection = e.srcElement.id
+    let result = playRound(playerSelection, computerPlay())
+    if (result === 'player') playerScore++
+    else if (result === 'computer') computerScore++
+    console.log(playerScore, computerScore)
+    if (playerScore + computerScore >= 5) {
+        let winnerMessage = playerScore > computerScore ? `You win!` : `The Computer Wins!`
+        console.log(`Final Score:
+        You : ${playerScore} Computer : ${computerScore}
+        ${winnerMessage}`)
+    }
+}
 
 // game()
 
 const buttons = document.querySelectorAll('button')
-buttons.forEach(button => button.addEventListener('click',playRound))
+buttons.forEach(button => button.addEventListener('click',game))
