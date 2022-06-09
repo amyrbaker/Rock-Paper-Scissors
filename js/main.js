@@ -7,16 +7,14 @@ function computerPlay() {
 function playRound(playerSelection, computerSelection) {
     console.log(playerSelection, computerSelection)
     if ((playerSelection === 'rock' && computerSelection === 'scissors') || (playerSelection === 'paper' && computerSelection === 'rock') || (playerSelection === 'scissors' && computerSelection === 'paper')) {
-        console.log(`You Win! ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()} beats ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()}`)
+        document.querySelector('#roundResults').innerText = `You Win! ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()} beats ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()}`
         return 'player'
     } else if ((playerSelection === 'rock' && computerSelection === 'paper') || (playerSelection === 'paper' && computerSelection === 'scissors') || (playerSelection === 'scissors' && computerSelection === 'rock')){
-        console.log(`You Lose! ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()} beats ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()}`)
+        document.querySelector('#roundResults').innerText = `You Lose! ${computerSelection[0].toUpperCase() + computerSelection.slice(1).toLowerCase()} beats ${playerSelection[0].toUpperCase() + playerSelection.slice(1).toLowerCase()}`
         return 'computer'
     } else if (playerSelection === computerSelection) {
-        console.log(`You tie! You both threw ${computerSelection}`)
+        document.querySelector('#roundResults').innerText = `You tie! You both threw ${computerSelection}`
         return 'tie'
-    } else {
-        return `You must select Rock, Paper, or Scissors`
     }
 }
 
@@ -26,16 +24,16 @@ function game(e) {
     let result = playRound(playerSelection, computerPlay())
     if (result === 'player') playerScore++
     else if (result === 'computer') computerScore++
+    document.querySelector('#finalResults').innerText = `
+    Current Score: You: ${playerScore} Computer: ${computerScore}`
     console.log(playerScore, computerScore)
-    if (playerScore + computerScore >= 5) {
+    if (playerScore + computerScore >= 5 || playerScore === 3 || computerScore === 3) {
         let winnerMessage = playerScore > computerScore ? `You win!` : `The Computer Wins!`
-        console.log(`Final Score:
+        document.querySelector('#finalResults').innerText = `Final Score:
         You : ${playerScore} Computer : ${computerScore}
-        ${winnerMessage}`)
+        ${winnerMessage}`
     }
 }
-
-// game()
 
 const buttons = document.querySelectorAll('button')
 buttons.forEach(button => button.addEventListener('click',game))
